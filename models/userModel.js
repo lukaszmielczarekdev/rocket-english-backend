@@ -16,10 +16,6 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  newsletter: {
-    type: Boolean,
-    default: false,
-  },
   admin: {
     type: Boolean,
     default: false,
