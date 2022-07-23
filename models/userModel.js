@@ -4,7 +4,28 @@ const userSchema = mongoose.Schema({
   name: { type: String, required: true },
   password: { type: String, required: true },
   email: { type: String, required: true },
+  createdAt: {
+    type: String,
+    default: new Date().toLocaleDateString("en-GB"),
+  },
+  lastLogged: {
+    type: String,
+    default: new Date().toLocaleDateString("en-GB"),
+  },
+  external: {
+    type: Boolean,
+    default: false,
+  },
+  newsletter: {
+    type: Boolean,
+    default: false,
+  },
+  admin: {
+    type: Boolean,
+    default: false,
+  },
   progress: {
+    tour: false,
     exp: {
       type: Number,
       default: 0,
@@ -31,8 +52,78 @@ const userSchema = mongoose.Schema({
       type: String,
       default: "menu",
     },
+    mercenaries: {
+      hired: {
+        type: [String],
+        default: [],
+      },
+      selected: {
+        type: [String],
+        default: [],
+      },
+      dead: {
+        type: [String],
+        default: [],
+      },
+      sent: {
+        type: [String],
+        default: [],
+      },
+    },
+    inventory: {
+      credits: {
+        type: Number,
+        default: 500,
+      },
+      word: {
+        type: Number,
+        default: 1,
+      },
+      stardust: {
+        type: Number,
+        default: 0,
+      },
+      steel: {
+        type: Number,
+        default: 0,
+      },
+      aluminum: {
+        type: Number,
+        default: 0,
+      },
+      crystal: {
+        type: Number,
+        default: 0,
+      },
+    },
+    turnNumber: {
+      type: Number,
+      default: 0,
+    },
+    prices: {
+      word: {
+        type: Number,
+        default: 450,
+      },
+      stardust: {
+        type: Number,
+        default: 5000,
+      },
+      steel: {
+        type: Number,
+        default: 3500,
+      },
+      aluminum: {
+        type: Number,
+        default: 4000,
+      },
+    },
+    taskQueue: [Object],
+    favorities: [Object],
+    expeditions: [Object],
+    planets: { available: [String], discovered: [String] },
     ufoDefeated: [String],
-    trophiesCollected: [Number],
+    trophiesCollected: [String],
     dialoguesCompleted: {
       crion: [Number],
       therion: [Number],
@@ -45,107 +136,26 @@ const userSchema = mongoose.Schema({
       centuria: [Number],
     },
     narration: {
-      menu: {
-        completed: {
-          type: Boolean,
-          default: false,
-        },
-        unlocked: {
-          type: Boolean,
-          default: false,
-        },
+      completed: {
+        type: [String],
+        default: [],
       },
-      crion: {
-        completed: {
-          type: Boolean,
-          default: false,
-        },
-        unlocked: {
-          type: Boolean,
-          default: true,
-        },
-      },
-      therion: {
-        completed: {
-          type: Boolean,
-          default: false,
-        },
-        unlocked: {
-          type: Boolean,
-          default: true,
-        },
-      },
-      crystalia: {
-        completed: {
-          type: Boolean,
-          default: false,
-        },
-        unlocked: {
-          type: Boolean,
-          default: true,
-        },
-      },
-      thalia: {
-        completed: {
-          type: Boolean,
-          default: false,
-        },
-        unlocked: {
-          type: Boolean,
-          default: true,
-        },
-      },
-      bathea: {
-        completed: {
-          type: Boolean,
-          default: false,
-        },
-        unlocked: {
-          type: Boolean,
-          default: true,
-        },
-      },
-      axios: {
-        completed: {
-          type: Boolean,
-          default: false,
-        },
-        unlocked: {
-          type: Boolean,
-          default: true,
-        },
-      },
-      desertia: {
-        completed: {
-          type: Boolean,
-          default: false,
-        },
-        unlocked: {
-          type: Boolean,
-          default: true,
-        },
-      },
-      xillon: {
-        completed: {
-          type: Boolean,
-          default: false,
-        },
-        unlocked: {
-          type: Boolean,
-          default: true,
-        },
-      },
-      centuria: {
-        completed: {
-          type: Boolean,
-          default: false,
-        },
-        unlocked: {
-          type: Boolean,
-          default: true,
-        },
+      unlocked: {
+        type: [String],
+        default: [
+          "crion",
+          "therion",
+          "crystalia",
+          "thalia",
+          "bathea",
+          "axios",
+          "desertia",
+          "xillon",
+          "centuria",
+        ],
       },
     },
+
     vortexAccess: {
       type: Boolean,
       default: false,
@@ -188,26 +198,6 @@ const userSchema = mongoose.Schema({
         default: 0,
       },
     },
-  },
-  createdAt: {
-    type: String,
-    default: new Date().toLocaleDateString("en-GB"),
-  },
-  lastLogged: {
-    type: String,
-    default: new Date().toLocaleDateString("en-GB"),
-  },
-  external: {
-    type: Boolean,
-    default: false,
-  },
-  newsletter: {
-    type: Boolean,
-    default: false,
-  },
-  admin: {
-    type: Boolean,
-    default: false,
   },
 });
 
