@@ -120,16 +120,142 @@ const userSchema = mongoose.Schema({
     planets: { available: [String], discovered: [String] },
     ufoDefeated: [String],
     trophiesCollected: [String],
-    dialoguesCompleted: {
-      crion: [Number],
-      therion: [Number],
-      crystalia: [Number],
-      thalia: [Number],
-      bathea: [Number],
-      axios: [Number],
-      desertia: [Number],
-      xillon: [Number],
-      centuria: [Number],
+    dialogues: {
+      crion: {
+        completed: {
+          type: [Number],
+          default: [],
+        },
+        hidden: {
+          type: [Number],
+          default: [],
+        },
+        shownOnce: {
+          type: [Number],
+          default: [],
+        },
+        specialCompleted: false,
+      },
+      therion: {
+        completed: {
+          type: [Number],
+          default: [],
+        },
+        hidden: {
+          type: [Number],
+          default: [2],
+        },
+        shownOnce: {
+          type: [Number],
+          default: [],
+        },
+        specialCompleted: false,
+      },
+      crystalia: {
+        completed: {
+          type: [Number],
+          default: [],
+        },
+        hidden: {
+          type: [Number],
+          default: [2, 3],
+        },
+        shownOnce: {
+          type: [Number],
+          default: [1, 2],
+        },
+        specialCompleted: false,
+      },
+      thalia: {
+        completed: {
+          type: [Number],
+          default: [],
+        },
+        hidden: {
+          type: [Number],
+          default: [3],
+        },
+        shownOnce: {
+          type: [Number],
+          default: [2],
+        },
+        specialCompleted: false,
+      },
+      bathea: {
+        completed: {
+          type: [Number],
+          default: [],
+        },
+        hidden: {
+          type: [Number],
+          default: [2],
+        },
+        shownOnce: {
+          type: [Number],
+          default: [1, 2],
+        },
+        specialCompleted: false,
+      },
+      axios: {
+        completed: {
+          type: [Number],
+          default: [],
+        },
+        hidden: {
+          type: [Number],
+          default: [4, 6, 7, 8, 9, 10],
+        },
+        shownOnce: {
+          type: [Number],
+          default: [1, 4, 6, 7, 8, 9, 10],
+        },
+        specialCompleted: false,
+      },
+      desertia: {
+        completed: {
+          type: [Number],
+          default: [],
+        },
+        hidden: {
+          type: [Number],
+          default: [],
+        },
+        shownOnce: {
+          type: [Number],
+          default: [1],
+        },
+        specialCompleted: false,
+      },
+      xillon: {
+        completed: {
+          type: [Number],
+          default: [],
+        },
+        hidden: {
+          type: [Number],
+          default: [3, 5, 7, 8, 9, 12],
+        },
+        shownOnce: {
+          type: [Number],
+          default: [2, 3, 6, 7, 8, 9],
+        },
+        specialCompleted: false,
+      },
+      centuria: {
+        completed: {
+          type: [Number],
+          default: [],
+        },
+        hidden: {
+          type: [Number],
+          default: [],
+        },
+        shownOnce: {
+          type: [Number],
+          default: [],
+        },
+        specialCompleted: false,
+      },
     },
     narration: {
       completed: {
@@ -151,7 +277,6 @@ const userSchema = mongoose.Schema({
         ],
       },
     },
-
     vortexAccess: {
       type: Boolean,
       default: false,
