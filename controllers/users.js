@@ -25,7 +25,7 @@ export const externalSignin = async (req, res) => {
         user: {
           name: user.name,
           email: user.email,
-          profile: user.profile,
+          progress: user.progress,
           external: true,
         },
         token: credential,
@@ -35,7 +35,7 @@ export const externalSignin = async (req, res) => {
         user: {
           name: existingUser.name,
           email: existingUser.email,
-          profile: existingUser.profile,
+          progress: existingUser.progress,
         },
         token: credential,
       });
@@ -71,7 +71,7 @@ export const signin = async (req, res) => {
       user: {
         name: existingUser.name,
         email: existingUser.email,
-        profile: existingUser.profile,
+        progress: existingUser.progress,
       },
       token,
     });
@@ -113,7 +113,7 @@ export const signup = async (req, res) => {
       user: {
         name: user.name,
         email: user.email,
-        profile: user.profile,
+        progress: user.progress,
       },
       token,
     });
@@ -139,6 +139,45 @@ export const deleteUser = async (req, res) => {
       await User.findOneAndDelete({ _id: req.userId }).exec();
 
       res.json({ user: null });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+};
+
+export const updateProgress = async (req, res) => {
+  const update = req.body;
+
+  if (req.userId.includes("@")) {
+    try {
+      const existingUser = await User.findOne({ email: req.userId });
+      const updatedUser = await User.findOneAndUpdate(
+        { email: req.userId },
+        { progress: { ...existingUser.progress, ...update } },
+        {
+          new: true,
+        }
+      ).exec();
+
+      res.json(updatedUser.progress);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  } else {
+    if (!mongoose.Types.ObjectId.isValid(req.userId))
+      return res.status(404).json({ message: "User not found" });
+
+    try {
+      const existingUser = await User.findOne({ _id: req.userId });
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: req.userId },
+        { progress: { ...existingUser.progress, ...update } },
+        {
+          new: true,
+        }
+      ).exec();
+
+      res.json(updatedUser.progress);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
