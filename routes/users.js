@@ -14,6 +14,6 @@ router.post("/signin", signin);
 router.post("/signup", signup);
 router.post("/externalsignin", externalSignin);
 router.delete("/:id", auth, deleteUser);
-router.patch("/progress/:id", auth, updateProgress);
+router.patch("/updateprogress", auth, updateProgress);
 
 export default router;
