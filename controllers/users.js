@@ -183,3 +183,40 @@ export const updateProgress = async (req, res) => {
     }
   }
 };
+
+export const saveGame = async (req, res) => {
+  const save = req.body;
+
+  if (req.userId.includes("@")) {
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { email: req.userId },
+        { progress: save },
+        {
+          new: true,
+        }
+      ).exec();
+
+      res.json(updatedUser.progress);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  } else {
+    if (!mongoose.Types.ObjectId.isValid(req.userId))
+      return res.status(404).json({ message: "User not found" });
+
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: req.userId },
+        { progress: save },
+        {
+          new: true,
+        }
+      ).exec();
+
+      res.json(updatedUser.progress);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+};
