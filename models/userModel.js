@@ -134,7 +134,10 @@ const userSchema = mongoose.Schema({
           type: [Number],
           default: [],
         },
-        specialCompleted: false,
+        specialCompleted: {
+          type: Boolean,
+          default: false,
+        },
       },
       therion: {
         completed: {
@@ -149,7 +152,10 @@ const userSchema = mongoose.Schema({
           type: [Number],
           default: [],
         },
-        specialCompleted: false,
+        specialCompleted: {
+          type: Boolean,
+          default: false,
+        },
       },
       crystalia: {
         completed: {
@@ -164,7 +170,10 @@ const userSchema = mongoose.Schema({
           type: [Number],
           default: [1, 2],
         },
-        specialCompleted: false,
+        specialCompleted: {
+          type: Boolean,
+          default: false,
+        },
       },
       thalia: {
         completed: {
@@ -179,7 +188,10 @@ const userSchema = mongoose.Schema({
           type: [Number],
           default: [2],
         },
-        specialCompleted: false,
+        specialCompleted: {
+          type: Boolean,
+          default: false,
+        },
       },
       bathea: {
         completed: {
@@ -194,7 +206,10 @@ const userSchema = mongoose.Schema({
           type: [Number],
           default: [1, 2],
         },
-        specialCompleted: false,
+        specialCompleted: {
+          type: Boolean,
+          default: false,
+        },
       },
       axios: {
         completed: {
@@ -209,7 +224,10 @@ const userSchema = mongoose.Schema({
           type: [Number],
           default: [1, 4, 6, 7, 8, 9, 10],
         },
-        specialCompleted: false,
+        specialCompleted: {
+          type: Boolean,
+          default: false,
+        },
       },
       desertia: {
         completed: {
@@ -224,7 +242,10 @@ const userSchema = mongoose.Schema({
           type: [Number],
           default: [1],
         },
-        specialCompleted: false,
+        specialCompleted: {
+          type: Boolean,
+          default: false,
+        },
       },
       xillon: {
         completed: {
@@ -239,7 +260,10 @@ const userSchema = mongoose.Schema({
           type: [Number],
           default: [2, 3, 6, 7, 8, 9],
         },
-        specialCompleted: false,
+        specialCompleted: {
+          type: Boolean,
+          default: false,
+        },
       },
       centuria: {
         completed: {
@@ -254,7 +278,10 @@ const userSchema = mongoose.Schema({
           type: [Number],
           default: [],
         },
-        specialCompleted: false,
+        specialCompleted: {
+          type: Boolean,
+          default: false,
+        },
       },
     },
     narration: {
