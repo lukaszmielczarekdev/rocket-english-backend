@@ -115,7 +115,7 @@ const userSchema = mongoose.Schema({
       },
     },
     taskQueue: [Object],
-    favorities: [Object],
+    favorites: [Object],
     expeditions: [Object],
     planets: { available: [String], discovered: [String] },
     ufoDefeated: [String],
