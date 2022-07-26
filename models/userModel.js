@@ -127,57 +127,6 @@ const userSchema = mongoose.Schema({
         default: [],
       },
     },
-    places: {
-      menu: {
-        type: [String],
-        default: [],
-      },
-      crion: {
-        type: [String],
-        default: ["shop", "casino", "quiz", "factory", "pad", "university"],
-      },
-      therion: {
-        type: [String],
-        default: ["mine", "bar", "quiz", "pad", "university", "shop"],
-      },
-      crystalia: {
-        type: [String],
-        default: ["ufo", "bar", "quiz", "factory", "pad", "university"],
-      },
-      thalia: {
-        type: [String],
-        default: ["shop", "casino", "quiz", "pad", "university", "mine"],
-      },
-      bathea: {
-        type: [String],
-        default: ["ufo", "bar", "quiz", "pad"],
-      },
-      axios: {
-        type: [String],
-        default: [
-          "ufo",
-          "quiz",
-          "pad",
-          "casino",
-          "factory",
-          "university",
-          "mine",
-          "shop",
-        ],
-      },
-      desertia: {
-        type: [String],
-        default: ["shop", "casino", "quiz", "pad", "ufo", "university"],
-      },
-      xillon: {
-        type: [String],
-        default: ["shop", "mine", "quiz", "factory", "pad"],
-      },
-      centuria: {
-        type: [String],
-        default: ["shop", "casino", "quiz", "pad"],
-      },
-    },
     ufoDefeated: [String],
     trophiesCollected: [String],
     dialogues: {
