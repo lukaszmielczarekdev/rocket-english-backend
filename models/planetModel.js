@@ -6,7 +6,7 @@ const planetSchema = mongoose.Schema({
   infrastructure: String,
   climate: String,
   inhabitants: String,
-  places: Object,
+  places: [String],
 });
 
 export default mongoose.model("Planet", planetSchema);
