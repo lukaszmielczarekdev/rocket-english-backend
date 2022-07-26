@@ -5,7 +5,7 @@ const planetSchema = mongoose.Schema({
   description: String,
   infrastructure: String,
   climate: String,
-  nhabitants: String,
+  inhabitants: String,
   places: Object,
 });
 
