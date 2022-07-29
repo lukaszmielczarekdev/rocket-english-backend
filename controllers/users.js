@@ -234,13 +234,4 @@ export const resetProgress = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-  try {
-    const defaultUser = await User.findOne({
-      _id: "62e30223de701f0177adeb17",
-    });
-
-    res.json(defaultUser.progress);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 };
