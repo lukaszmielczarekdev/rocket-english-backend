@@ -28,11 +28,11 @@ const userSchema = mongoose.Schema({
     },
     characterLvl: {
       type: Number,
-      default: 0,
+      default: 1,
     },
     rocketLvl: {
       type: Number,
-      default: 0,
+      default: 1,
     },
     movement: {
       maxMovePoints: {
