@@ -4,8 +4,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 
 import userRoutes from "./routes/users.js";
+import npcRoutes from "./routes/npc.js";
 import planetRoutes from "./routes/planets.js";
-import npc from "./routes/npc.js";
+import trophyRoutes from "./routes/trophies.js";
 
 const app = express();
 
@@ -13,8 +14,9 @@ app.use(bodyParser.json({ limit: "5mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
 app.use(cors());
 app.use("/user", userRoutes);
+app.use("/npc", npcRoutes);
 app.use("/planet", planetRoutes);
-app.use("/npc", npc);
+app.use("/trophy", trophyRoutes);
 
 app.get("/", (req, res) => res.send("Rocket English API"));
 
