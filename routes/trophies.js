@@ -3,6 +3,6 @@ import { getTrophies } from "../controllers/trophies.js";
 
 const router = express.Router();
 
-router.get("/trophy", getTrophies);
+router.get("/", getTrophies);
 
 export default router;
