@@ -357,6 +357,14 @@ const userSchema = mongoose.Schema({
       type: Boolean,
       default: false,
     },
+    newGame: {
+      type: Boolean,
+      default: true,
+    },
+    gamePaused: {
+      type: Boolean,
+      default: false,
+    },
     eventsHappened: {
       findTheCrew: {
         type: Number,
