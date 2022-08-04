@@ -7,6 +7,8 @@ import {
   updateProgress,
   resetProgress,
   saveGame,
+  resetPassword,
+  changePassword,
 } from "../controllers/users.js";
 import auth from "../middleware/auth.js";
 
@@ -19,5 +21,7 @@ router.delete("/:id", auth, deleteUser);
 router.patch("/updateprogress", auth, updateProgress);
 router.patch("/resetprogress", auth, resetProgress);
 router.patch("/savegame", auth, saveGame);
+router.post("/resetpassword", resetPassword);
+router.patch("/changepassword/:token", changePassword);
 
 export default router;

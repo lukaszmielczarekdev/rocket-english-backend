@@ -3,6 +3,11 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import User from "../models/userModel.js";
 import { v4 as uuidv4 } from "uuid";
+import {
+  transporter,
+  passwordResetRequestMailTemplate,
+  passwordChangeConfirmationMailTemplate,
+} from "../services/mail.js";
 
 export const externalSignin = async (req, res) => {
   try {
@@ -231,6 +236,93 @@ export const resetProgress = async (req, res) => {
     });
 
     res.json(defaultUser.progress);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const existingUser = await User.findOne({ email });
+    if (!existingUser || existingUser.external)
+      return res.status(404).json({ message: "User not found" });
+
+    const USER_SECRET = process.env.SECRET;
+
+    const token = jwt.sign(
+      { id: existingUser._id, email: existingUser.email },
+      USER_SECRET,
+      {
+        expiresIn: "15m",
+      }
+    );
+
+    const link = `https://rocket-english.pages.dev/passwordreset/#access_token=${token}`;
+
+    await transporter.sendMail({
+      from: "rocket.english.service@gmail.com",
+      to: email,
+      subject: "Rocket English - Password Reset Request",
+      html: passwordResetRequestMailTemplate(
+        link,
+        existingUser.name,
+        existingUser.email
+      ),
+    });
+
+    res.json({ message: "Password reset link sent" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const changePassword = async (req, res) => {
+  const { password, confirmpassword } = req.body;
+  const { token } = req.params;
+
+  if (password !== confirmpassword)
+    return res.status(400).json({ message: "Passwords don't match" });
+
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+
+  if (!decodedToken) {
+    return res.status(400).send("Access denied");
+  }
+
+  if (decodedToken.exp * 1000 < new Date().getTime()) {
+    return res.status(400).json({ message: "Password reset link has expired" });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  try {
+    const existingUser = await User.findOne({ _id: decodedToken.id });
+    if (!existingUser || existingUser.external)
+      return res.status(404).json({ message: "User not found" });
+
+    await User.findOneAndUpdate(
+      { _id: decodedToken.id },
+      { password: hashedPassword },
+      {
+        new: true,
+      }
+    ).exec();
+
+    const link = `https://rocket-english.pages.dev/`;
+
+    await transporter.sendMail({
+      from: "rocket.english.service@gmail.com",
+      to: email,
+      subject: "Rocket English - Password Successfully Changed",
+      html: passwordChangeConfirmationMailTemplate(
+        link,
+        existingUser.name,
+        existingUser.email
+      ),
+    });
+
+    res.json({ message: "Password successfully changed" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
