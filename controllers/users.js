@@ -340,6 +340,10 @@ export const updateUserAccount = async (req, res) => {
     }
   } else {
     try {
+      const otherUser = await User.findOne({ email });
+      if (otherUser) {
+        return res.status(400).json({ message: "Email is already used" });
+      }
       const existingUser = await User.findOne({ _id: req.userId });
 
       const emailCopy = email ? email : existingUser.email;
