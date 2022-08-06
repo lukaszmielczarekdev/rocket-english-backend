@@ -327,3 +327,75 @@ export const changePassword = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const updateUserAccount = async (req, res) => {
+  const { username, email, oldPassword, newPassword, confirmNewPassword } =
+    req.body;
+
+  if (req.userId.includes("@")) {
+    try {
+      res.json(null);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  } else {
+    try {
+      const existingUser = await User.findOne({ _id: req.userId });
+
+      const emailCopy = email ? email : existingUser.email;
+      const userNameCopy = username ? username : existingUser.name;
+      const oldPasswordCopy = oldPassword ? oldPassword : null;
+      const newPasswordCopy = newPassword ? newPassword : null;
+      const confirmNewPasswordCopy = confirmNewPassword
+        ? confirmNewPassword
+        : null;
+
+      if (newPasswordCopy !== confirmNewPasswordCopy)
+        return res.status(400).json({ message: "Passwords don't match" });
+
+      if (!mongoose.Types.ObjectId.isValid(req.userId))
+        return res.status(404).json({ message: "User not found" });
+
+      let hashedPassword;
+
+      if (oldPasswordCopy && newPasswordCopy && confirmNewPasswordCopy) {
+        const isPasswordCorect = await bcrypt.compare(
+          oldPasswordCopy,
+          existingUser.password
+        );
+
+        if (!isPasswordCorect)
+          return res.status(400).json({ message: "Invalid password" });
+
+        hashedPassword = await bcrypt.hash(newPasswordCopy, 12);
+      }
+
+      const dataToUpdate = hashedPassword
+        ? { name: userNameCopy, email: emailCopy, password: hashedPassword }
+        : { name: userNameCopy, email: emailCopy };
+
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: req.userId },
+        dataToUpdate,
+        {
+          new: true,
+        }
+      ).exec();
+
+      const token = jwt.sign(
+        { id: updatedUser._id, email: updatedUser.email },
+        process.env.SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
+
+      res.json({
+        user: { name: updatedUser.name, email: updatedUser.email },
+        token,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+};

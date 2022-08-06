@@ -9,6 +9,7 @@ import {
   saveGame,
   resetPassword,
   changePassword,
+  updateUserAccount,
 } from "../controllers/users.js";
 import auth from "../middleware/auth.js";
 
@@ -23,5 +24,6 @@ router.patch("/resetprogress", auth, resetProgress);
 router.patch("/savegame", auth, saveGame);
 router.post("/resetpassword", resetPassword);
 router.patch("/changepassword/:token", changePassword);
+router.patch("/updateuseraccount/:id", auth, updateUserAccount);
 
 export default router;
