@@ -313,7 +313,7 @@ export const changePassword = async (req, res) => {
 
     await transporter.sendMail({
       from: "rocket.english.service@gmail.com",
-      to: email,
+      to: existingUser.email,
       subject: "Rocket English - Password Successfully Changed",
       html: passwordChangeConfirmationMailTemplate(
         link,
