@@ -16,6 +16,10 @@ export const externalSignin = async (req, res) => {
 
     const existingUser = await User.findOne({ email: decodedData.email });
     if (!existingUser) {
+      if (decodedData.name.toLowerCase() === "admin") {
+        return res.status(400).json({ message: "Invalid username" });
+      }
+
       const hashedPassword = await bcrypt.hash(uuidv4(), 12);
 
       const user = await User.create({
@@ -89,6 +93,10 @@ export const signup = async (req, res) => {
   const { username, email, password, confirmpassword } = req.body;
 
   try {
+    if (username.toLowerCase() === "admin") {
+      return res.status(400).json({ message: "Invalid username" });
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
