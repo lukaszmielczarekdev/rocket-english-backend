@@ -236,9 +236,6 @@ export const saveGame = async (req, res) => {
 
 export const resetProgress = async (req, res) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.userId))
-      return res.status(404).json({ message: "Access denied" });
-
     const defaultUser = await User.findOne({
       _id: "62e30223de701f0177adeb17",
     });
