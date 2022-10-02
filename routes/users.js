@@ -3,6 +3,7 @@ import {
   externalSignin,
   signin,
   signup,
+  signupdemo,
   deleteUser,
   updateProgress,
   resetProgress,
@@ -17,6 +18,7 @@ const router = express.Router();
 
 router.post("/signin", signin);
 router.post("/signup", signup);
+router.post("/signupdemo", signupdemo);
 router.post("/externalsignin", externalSignin);
 router.delete("/:id", auth, deleteUser);
 router.patch("/updateprogress", auth, updateProgress);

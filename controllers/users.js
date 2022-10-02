@@ -26,6 +26,7 @@ export const externalSignin = async (req, res) => {
         name: decodedData.name,
         password: hashedPassword,
         email: decodedData.email,
+        expire_at: null,
       });
 
       await user.save();
@@ -110,6 +111,38 @@ export const signup = async (req, res) => {
       name: username,
       password: hashedPassword,
       email,
+      expire_at: null,
+    });
+
+    await user.save();
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.SECRET,
+      {
+        expiresIn: "24h",
+      }
+    );
+
+    res.status(200).json({
+      user: {
+        name: user.name,
+        email: user.email,
+        progress: user.progress,
+      },
+      token,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const signupdemo = async (req, res) => {
+  try {
+    const user = await User.create({
+      name: uuidv4(),
+      password: uuidv4(),
+      email: uuidv4() + "@gmail.com",
     });
 
     await user.save();
