@@ -4,11 +4,7 @@ const userSchema = mongoose.Schema({
   name: { type: String, required: true },
   password: { type: String, required: true },
   email: { type: String, required: true },
-  createdAt: {
-    type: String,
-    default: new Date().toLocaleDateString("en-GB"),
-  },
-  expire_at: { type: Date, default: Date.now, expires: "24h" },
+  createdAt: { type: Date, expires: "24h", default: Date.now },
   lastLogged: {
     type: String,
     default: new Date().toLocaleDateString("en-GB"),
