@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import User from "../models/userModel.js";
 import { v4 as uuidv4 } from "uuid";
+import { generateRandomStringNumber } from "../utils.js";
 import {
   transporter,
   passwordResetRequestMailTemplate,
@@ -139,10 +140,11 @@ export const signup = async (req, res) => {
 
 export const signupdemo = async (req, res) => {
   try {
+    const username = "guest" + generateRandomStringNumber();
     const user = await User.create({
-      name: uuidv4(),
+      name: username,
       password: uuidv4(),
-      email: uuidv4() + "@gmail.com",
+      email: username + "@rocketenglish.com",
     });
 
     await user.save();
